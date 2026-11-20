@@ -1,0 +1,54 @@
+[workspace]
+resolver = "3"
+members = [
+    "nousdb",
+    "nousdb-core",
+    "nousdb-operators",
+    "nousdb-optimizer",
+    "nousdb-planner",
+    "nousdb-sql",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.94"
+license = "Apache-2.0"
+authors = ["Christos Tsapelas"]
+repository = "https://github.com/Ctsap/nousdb"
+keywords = ["llm", "dataframe", "datafusion", "query-engine", "semantic"]
+categories = ["database-implementations", "science"]
+
+[workspace.dependencies]
+nousdb-core = { version = "0.1.0", path = "nousdb-core", default-features = false }
+nousdb-operators = { version = "0.1.0", path = "nousdb-operators" }
+nousdb-optimizer = { version = "0.1.0", path = "nousdb-optimizer" }
+nousdb-planner = { version = "0.1.0", path = "nousdb-planner" }
+nousdb-sql = { version = "0.1.0", path = "nousdb-sql" }
+
+# NousDB's public API exposes DataFusion and Arrow types, so these pins are
+# part of its semver contract. Default features are off here so the sub-crates
+# pull in only what they use; the `nousdb` crate turns DataFusion's defaults
+# back on.
+datafusion = { version = "55.2", default-features = false }
+datafusion-common = "55.2"
+datafusion-expr = { version = "55.2", default-features = false }
+datafusion-physical-plan = "55.2"
+arrow = "59"
+
+async-trait = "0.1"
+futures = "0.3"
+litellm-rs = { version = "0.5.0", default-features = false }
+log = "0.4"
+minijinja = { version = "2.12", features = ["loader", "preserve_order"] }
+ollama-rs = "0.3.2"
+schemars = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1.0.145", features = ["preserve_order"] }
+thiserror = "2"
+tiktoken-rs = "0.6"
+tokio = { version = "1.39", features = ["sync", "rt", "time"] }
+toml = "0.9"
+
+tempfile = "3"
+wiremock = "0.6"

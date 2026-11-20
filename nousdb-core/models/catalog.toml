@@ -1,0 +1,53 @@
+# Models NousDB knows out of the box.
+#
+# `context_window` and `max_output_tokens` are the serving limits; set them to
+# what your deployment allows (for vLLM, `--max-model-len`). The batch-size
+# fields are NousDB defaults: `quality_max_batch_size` is the largest batch at
+# which the model kept its per-row accuracy in our measurements, and
+# `max_concurrent_requests` suits a vLLM server.
+#
+# Add or override models with `ModelCatalog::with_card` or a TOML file of the
+# same shape loaded with `ModelCatalog::from_file`.
+
+[[models]]
+id = "gpt-4o-mini"
+name = "GPT-4o mini"
+context_window = 128000
+max_output_tokens = 16384
+max_batch_size = 200
+pricing = { input_per_1k_tokens = 0.00015, output_per_1k_tokens = 0.0006 }
+
+[[models]]
+id = "Qwen/Qwen3-8B"
+name = "Qwen3 8B"
+context_window = 32768
+max_output_tokens = 9000
+max_batch_size = 25
+quality_max_batch_size = 25
+max_concurrent_requests = 16
+
+[[models]]
+id = "Qwen/Qwen3-30B-A3B"
+name = "Qwen3 30B A3B"
+context_window = 40960
+max_output_tokens = 4096
+max_batch_size = 25
+quality_max_batch_size = 16
+max_concurrent_requests = 16
+
+[[models]]
+id = "meta-llama/Llama-3.1-8B-Instruct"
+name = "Llama 3.1 8B Instruct"
+context_window = 131072
+max_output_tokens = 4096
+max_batch_size = 20
+quality_max_batch_size = 8
+max_concurrent_requests = 16
+
+[[models]]
+id = "RedHatAI/Llama-3.3-70B-Instruct-quantized.w8a8"
+name = "Llama 3.3 70B Instruct (W8A8)"
+context_window = 128000
+max_output_tokens = 8064
+max_batch_size = 100
+max_concurrent_requests = 16

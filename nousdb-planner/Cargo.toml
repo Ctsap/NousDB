@@ -1,0 +1,24 @@
+[package]
+name = "nousdb-planner"
+description = "Physical planner that turns NousDB semantic plan nodes into executable operators"
+readme = "README.md"
+documentation = "https://docs.rs/nousdb-planner"
+include = ["src/**", "README.md", "LICENSE"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+async-trait.workspace = true
+datafusion.workspace = true
+log.workspace = true
+nousdb-core.workspace = true
+nousdb-operators.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true

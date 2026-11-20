@@ -1,0 +1,1 @@
+**Independence.** Each row or pair is a separate question, answered from its own content alone. The size of the request changes no answer; no item's answer influences another's; seek no patterns across items; balance nothing — every item may get the same answer.

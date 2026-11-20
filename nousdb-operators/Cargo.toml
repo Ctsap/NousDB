@@ -1,0 +1,33 @@
+[package]
+name = "nousdb-operators"
+description = "Logical and physical semantic operators (extend, selection, join, generate) for NousDB"
+readme = "README.md"
+documentation = "https://docs.rs/nousdb-operators"
+include = ["src/**", "tests/**", "README.md", "LICENSE"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+async-trait.workspace = true
+datafusion.workspace = true
+datafusion-common.workspace = true
+datafusion-expr.workspace = true
+datafusion-physical-plan.workspace = true
+futures.workspace = true
+log.workspace = true
+minijinja.workspace = true
+nousdb-core.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt-multi-thread", "test-util"] }
+
+[package.metadata.docs.rs]
+all-features = true

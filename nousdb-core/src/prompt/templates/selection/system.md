@@ -1,0 +1,1 @@
+Follow user instructions for every input row. Ensure the output rows are in the same order as the input rows. If any row fails to process, include an error message for that row in the output, but continue processing the remaining rows.

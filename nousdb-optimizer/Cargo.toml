@@ -1,0 +1,28 @@
+[package]
+name = "nousdb-optimizer"
+description = "Logical and physical optimizer rules for NousDB semantic query plans"
+readme = "README.md"
+documentation = "https://docs.rs/nousdb-optimizer"
+include = ["src/**", "README.md", "LICENSE"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+datafusion.workspace = true
+log.workspace = true
+nousdb-core.workspace = true
+nousdb-operators.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+async-trait.workspace = true
+tempfile.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true

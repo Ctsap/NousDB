@@ -1,0 +1,49 @@
+[package]
+name = "nousdb-core"
+description = "Model providers, prompt templates, token estimation and certification statistics for NousDB"
+readme = "README.md"
+documentation = "https://docs.rs/nousdb-core"
+include = ["src/**", "models/**", "tests/**", "README.md", "LICENSE"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[features]
+default = ["openai", "azure", "ollama"]
+# OpenAI-compatible HTTP endpoints (vLLM, LiteLLM proxy, OpenAI, Ollama's /v1).
+openai = ["dep:litellm-rs"]
+# Azure OpenAI deployments.
+azure = ["openai", "litellm-rs/providers-extra"]
+# Ollama's native API.
+ollama = ["dep:ollama-rs", "dep:schemars"]
+
+[dependencies]
+arrow.workspace = true
+async-trait.workspace = true
+datafusion.workspace = true
+litellm-rs = { workspace = true, optional = true }
+log.workspace = true
+minijinja.workspace = true
+ollama-rs = { workspace = true, optional = true }
+schemars = { workspace = true, optional = true }
+serde.workspace = true
+# `preserve_order` is required: the JSON schema sent to the model must list
+# its properties in output-schema declaration order.
+serde_json.workspace = true
+thiserror.workspace = true
+tiktoken-rs.workspace = true
+tokio.workspace = true
+toml.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+wiremock.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true

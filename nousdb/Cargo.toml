@@ -1,0 +1,65 @@
+[package]
+name = "nousdb"
+description = "A semantic query engine: LLM-powered operators on Apache DataFusion"
+readme = "README.md"
+documentation = "https://docs.rs/nousdb"
+include = ["src/**", "tests/**", "examples/**", "README.md", "LICENSE"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[features]
+default = ["openai", "azure", "ollama"]
+openai = ["nousdb-core/openai"]
+azure = ["nousdb-core/azure"]
+ollama = ["nousdb-core/ollama"]
+
+[dependencies]
+# The sub-crates build DataFusion without its default features; the public
+# crate re-exports it with them, so `nousdb::datafusion` is the full engine.
+datafusion = { workspace = true, default-features = true }
+log.workspace = true
+nousdb-core.workspace = true
+nousdb-operators.workspace = true
+nousdb-optimizer.workspace = true
+nousdb-planner.workspace = true
+nousdb-sql.workspace = true
+
+[dev-dependencies]
+async-trait.workspace = true
+serde_json.workspace = true
+tempfile.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+
+# The examples pick a provider at run time, so they need both.
+[[example]]
+name = "quickstart"
+required-features = ["openai", "ollama"]
+
+[[example]]
+name = "semantic_select"
+required-features = ["openai", "ollama"]
+
+[[example]]
+name = "semantic_join"
+required-features = ["openai", "ollama"]
+
+[[example]]
+name = "generate"
+required-features = ["openai", "ollama"]
+
+[[example]]
+name = "custom_model_card"
+required-features = ["openai", "ollama"]
+
+[[example]]
+name = "quality_certification"
+required-features = ["openai", "ollama"]
+
+[package.metadata.docs.rs]
+all-features = true
