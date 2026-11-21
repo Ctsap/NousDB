@@ -477,8 +477,9 @@ pub fn return_field(kind: MarkerKind, args: &ReturnFieldArgs) -> Result<FieldRef
         .then(|| args.scalar_arguments[last].and_then(is_string_scalar))
         .flatten();
     let input_end = if spec_literal.is_some() { last } else { n };
-    for at in FIRST_INPUT..input_end {
-        if let Some(sv) = args.scalar_arguments[at] {
+    let inputs = args.scalar_arguments.iter().enumerate();
+    for (at, &arg) in inputs.take(input_end).skip(FIRST_INPUT) {
+        if let Some(sv) = arg {
             let hint = if is_string_scalar(sv).is_some() {
                 " (a trailing type literal must come after at least one input column)"
             } else {

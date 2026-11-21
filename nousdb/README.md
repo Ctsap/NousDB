@@ -49,19 +49,40 @@ async fn main() -> nousdb::datafusion::error::Result<()> {
 
 ## Contents
 
-- [Installation](#installation)
-- [Quickstart](#quickstart)
-- [Core concepts](#core-concepts)
-- [Models and providers](#models-and-providers)
-- [Writing NousDB programs](#writing-nousdb-programs)
-- [SQL](#sql)
-- [The optimizer](#the-optimizer)
-- [Quality certification](#quality-certification)
-- [Reasoning modes](#reasoning-modes)
-- [Configuration reference](#configuration-reference)
-- [Writing a custom provider](#writing-a-custom-provider)
-- [Limitations](#limitations)
-- [License](#license)
+- [NousDB](#nousdb)
+  - [Contents](#contents)
+  - [Installation](#installation)
+    - [Cargo features](#cargo-features)
+  - [Quickstart](#quickstart)
+  - [Core concepts](#core-concepts)
+  - [Models and providers](#models-and-providers)
+    - [Ollama](#ollama)
+    - [OpenAI-compatible endpoints](#openai-compatible-endpoints)
+    - [The built-in catalog](#the-built-in-catalog)
+    - [Adding your own model](#adding-your-own-model)
+    - [Several providers](#several-providers)
+    - [Concurrency](#concurrency)
+  - [Writing NousDB programs](#writing-nousdb-programs)
+    - [Extend: add model-derived columns](#extend-add-model-derived-columns)
+    - [Semantic selection: keep the rows the model accepts](#semantic-selection-keep-the-rows-the-model-accepts)
+    - [Semantic join: pair the rows the model matches](#semantic-join-pair-the-rows-the-model-matches)
+    - [Generate: a table from a description](#generate-a-table-from-a-description)
+    - [Mixing with SQL and relational operators](#mixing-with-sql-and-relational-operators)
+    - [Writing good instructions](#writing-good-instructions)
+  - [SQL](#sql)
+  - [The optimizer](#the-optimizer)
+    - [Token histograms](#token-histograms)
+    - [Inspecting plans](#inspecting-plans)
+  - [Quality certification](#quality-certification)
+  - [Reasoning modes](#reasoning-modes)
+  - [Configuration reference](#configuration-reference)
+    - [`NousDBContextBuilder`](#nousdbcontextbuilder)
+    - [Environment variables](#environment-variables)
+  - [Writing a custom provider](#writing-a-custom-provider)
+  - [Python](#python)
+  - [Limitations](#limitations)
+  - [Citation](#citation)
+  - [License](#license)
 
 ## Installation
 
@@ -87,7 +108,6 @@ NousDB release.
 | Feature | Default | Enables |
 |---|---|---|
 | `openai` | yes | `OpenAiCompatibleProvider` for OpenAI-compatible HTTP endpoints |
-| `azure` | yes | Azure OpenAI deployments in that provider |
 | `ollama` | yes | `OllamaProvider` for Ollama's native API |
 
 With `default-features = false` you can still implement your own
@@ -203,24 +223,6 @@ let openai = OpenAiCompatibleProvider::builder("openai")
     .await?;
 # Ok(()) }
 ```
-
-Azure OpenAI uses the deployment name as the model id:
-
-```rust,no_run
-# async fn example() -> nousdb::datafusion::error::Result<()> {
-use nousdb::prelude::*;
-
-let azure = OpenAiCompatibleProvider::azure("https://my-resource.openai.azure.com")
-    .api_key_env("AZURE_OPENAI_API_KEY")
-    .model(ModelCard::new("my-gpt-4o-mini", 128_000).with_max_output_tokens(16_384))
-    .build()
-    .await?;
-# Ok(()) }
-```
-
-API keys are held in an `ApiKey`, which never appears in `Debug` output or
-logs. Every request uses temperature 0 by default, so repeated runs give the
-same answers.
 
 ### The built-in catalog
 
@@ -787,6 +789,23 @@ separately.
 - Token counts use the `cl100k_base` tokenizer for every model, so batch sizes
   are estimates for models with other tokenizers.
 - Text and tabular data are the only supported modalities.
+
+## Citation
+
+If you use NousDB in your research, please cite the
+[paper](https://arxiv.org/abs/2610.28551):
+
+```bibtex
+@misc{tsapelas2026nousdbfastquery,
+      title={NousDB - A Fast Query Engine for Semantic Analytics},
+      author={Christos Tsapelas and Georgia Koutrika and Yannis Ioannidis},
+      year={2026},
+      eprint={2610.28551},
+      archivePrefix={arXiv},
+      primaryClass={cs.DB},
+      url={https://arxiv.org/abs/2610.28551},
+}
+```
 
 ## License
 

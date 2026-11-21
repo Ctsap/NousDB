@@ -656,12 +656,12 @@ mod tests {
         let b = designate(&s, &space);
         assert_eq!(a.probe_item, b.probe_item);
         assert_eq!(a.rung_count(), 3);
-        for rung_idx in 0..a.rung_count() {
+        for (rung_idx, &k) in s.ladder.iter().enumerate() {
             let (x, y) = (a.rung(rung_idx), b.rung(rung_idx));
             assert_eq!(x.k, y.k);
             assert_eq!(x.indices, y.indices);
             assert_eq!(x.probe_ids, y.probe_ids);
-            assert_eq!(x.k, s.ladder[rung_idx], "flat rungs are the ladder");
+            assert_eq!(x.k, k, "flat rungs are the ladder");
         }
     }
 
@@ -880,7 +880,8 @@ mod tests {
 
         let reference = build_probe_input(&batch, &design.reference_indices()).unwrap();
         assert_eq!(reference.num_rows(), 5);
-        for j in 0..5 {
+        assert_eq!(design.probe_item.len(), 5);
+        for (j, &item) in design.probe_item.iter().enumerate() {
             let row = find_probe_row(&reference, j as u32).unwrap();
             assert_eq!(row, j);
             let vals = reference
@@ -888,7 +889,7 @@ mod tests {
                 .as_any()
                 .downcast_ref::<Int64Array>()
                 .unwrap();
-            assert_eq!(vals.value(row), design.probe_item[j] as i64);
+            assert_eq!(vals.value(row), item as i64);
         }
 
         let r1 = design.rung(1);
