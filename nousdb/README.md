@@ -6,7 +6,7 @@
   <a href="https://crates.io/crates/nousdb"><img src="https://img.shields.io/crates/v/nousdb.svg" alt="crates.io"></a>
   <a href="https://docs.rs/nousdb"><img src="https://docs.rs/nousdb/badge.svg" alt="docs.rs"></a>
   <a href="https://github.com/Ctsap/nousdb/actions/workflows/ci.yml"><img src="https://github.com/Ctsap/nousdb/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/crates/l/nousdb.svg" alt="License"></a>
+  <a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg" alt="License"></a>
 </p>
 
 # NousDB
